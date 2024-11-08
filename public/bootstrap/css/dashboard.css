@@ -46,3 +46,43 @@
 .navbar .form-control {
   padding: .75rem 1rem;
 }
+
+
+    /* Style personnalisé pour le mode sombre */
+    body {
+      background-color: #121212;
+      color: #ffffff;
+  }
+
+    .form-control, .form-select, .table {
+        background-color: #333333;
+        color: #ffffff;
+        border: 1px solid #555555;
+    }
+
+    .form-control::placeholder, .form-select {
+        color: #bbbbbb;
+    }
+
+    .form-label {
+        color: #cccccc;
+    }
+
+    .btn-primary {
+        background-color: #1a73e8;
+        border-color: #1a73e8;
+    }
+
+    .btn-secondary {
+        background-color: #444444;
+        border-color: #444444;
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+        opacity: 0.9;
+    }
+
+    .table-bordered th, .table-bordered td {
+        border-color: #555555;
+    }
+

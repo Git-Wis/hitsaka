@@ -44,6 +44,12 @@
                         @endif
                     @endauth
                 </div>
+
+                <div class="hidden fixed px-6 top-6 py-4 sm:block">
+                    <a href="{{ route("login") }}" class="text-sm text-gray-700 px-3 py-2 bg-danger">Réservation</a>
+                    <a href="{{ route('colis.suivi') }}" class="text-sm text-gray-700 px-3 py-2 bg-danger">Suivie de Colis</a>
+                </div>
+
             @endif
 
             <div class="container mt-5">

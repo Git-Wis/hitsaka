@@ -86,23 +86,37 @@
             </tbody>
         </table>
 
+
         <!-- Pagination -->
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                <li class="page-item {{ $reservations->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $reservations->previousPageUrl() . request()->getQueryString() }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+
+                @for ($i = 1; $i <= $reservations->lastPage(); $i++)
+                    <li class="page-item {{ $reservations->currentPage() == $i ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $reservations->url($i) . request()->getQueryString() }}">{{ $i }}</a>
+                    </li>
+                @endfor
+
+                <li class="page-item {{ $reservations->hasMorePages() ? '' : 'disabled' }}">
+                    <a class="page-link" href="{{ $reservations->nextPageUrl() . request()->getQueryString() }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+
+         <!-- Boutons d'exportation -->
+         <div class="mt-4">
+            <a href="{{ route('resa.export.excel') }}" class="btn btn-success me-2">Exporter en Excel</a>
+            <a href="{{ route('resa.export.pdf') }}" class="btn btn-danger">Exporter en PDF</a>
+        </div>
+
+        
     </div>
 
 

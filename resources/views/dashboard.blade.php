@@ -146,9 +146,9 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <a class="nav-link d-flex align-items-center gap-2" href="{{ route('colis.index') }}">
                   <svg class="bi"><use xlink:href="#cart"/></svg>
-                  {{ __('Place dispo/j') }}
+                  {{ __('Gestion des Colis') }}
                   </a>
               </li>
              
@@ -160,7 +160,7 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('equipe.index') }}">
                 <svg class="bi"><use xlink:href="#people"/></svg>
                 {{ __('Gestion des Equipages') }}
                 </a>
@@ -182,19 +182,19 @@
               </h6>
               <ul class="nav flex-column mb-auto">
               <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <a class="nav-link d-flex align-items-center gap-2" href="{{ route('resa.semaine_resa',1) }}">
                   <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                   Aujourd'hui
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <a class="nav-link d-flex align-items-center gap-2" href="{{ route('resa.semaine_resa',2) }}">
                   <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                   Demain
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <a class="nav-link d-flex align-items-center gap-2" href="{{ route('resa.semaine_resa',3) }}">
                   <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                   Apres-demain
                   </a>

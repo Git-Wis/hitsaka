@@ -7,6 +7,7 @@ use App\Models\Passage;
 use App\Models\voyage;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class ResaController extends Controller
@@ -60,6 +61,72 @@ class ResaController extends Controller
             $reservation->save();
         }
         return redirect()->back()->with('success', 'Réservation confirmée.');
+    }
+
+    // Export en Excel
+    public function exportExcel()
+    {
+        return Excel::download(new ReservationsExport, 'reservations.xlsx');
+    }
+
+    // Export en PDF
+    public function exportPDF()
+    {
+        $reservations = Reservation::all();
+        $pdf = PDF::loadView('reservations.pdf', compact('reservations'));
+        return $pdf->download('reservations.pdf');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * 
+    **/
+
+    public function semaine_resa($jours, Request $request)
+    {
+        // Récupérer les filtres si fournis
+        $filters = $request->only(['direction']);
+
+        // Récupérer les réservations avec les filtres
+        $reservations = Reservation::query();
+
+        if ($request->filled('direction')) {
+            $reservations->where('direction', $filters['direction']);
+            //dd($reservations);
+        }
+
+        switch ($jours) {
+            case 1 :
+                # code...
+                $today = Carbon::today()->toDateString();
+                $reservations = $reservations->where('date',$today)->where('payer',true)->get();
+                //dd($today,$reservations);
+                return view('page.semaine_resa.today', compact('reservations', 'filters'));
+                break;
+
+            case 2 :
+                # code...
+                $tomorow = Carbon::today()->addDay($jours-1);
+                $reservations->whereDate('date',$tomorow);
+                $reservations = $reservations->where('payer',true)->get();
+                //dd($tomorow,$reservations);
+                return view('page.semaine_resa.tomorow', compact('reservations', 'filters'));
+            break;
+
+            case 3 :
+                # code...
+                $aftertomorow = Carbon::today()->addDay($jours-1);
+                $reservations = $reservations->where('date',$aftertomorow)->where('payer',true)->get();
+                return view('page.semaine_resa.aftertomorow', compact('reservations', 'filters'));    
+            break;
+            
+            default:
+                # code...
+                return view('dashboard');
+                break;
+        }
+
     }
 
     /**
