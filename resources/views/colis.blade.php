@@ -141,47 +141,78 @@
     
                 <div class="container mt-5">
                     <h1>Suivi de Colis</h1>
-                    <form action="#" method="GET" class="mb-4">
+                    <form action="{{ route('colis.suivi') }}" method="GET" class="mb-4">
                         <div class="input-group">
-                            <input type="text" name="id" class="form-control" placeholder="Entrez votre ID de colis" required>
+                            <input type="text" name="numcolis" class="form-control" placeholder="Entrez votre Numéro de colis" required>
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">Suivre</button>
                             </div>
                         </div>
                     </form>
                     
-                    <div class="card">
-                        <div class="card-header">
-                            Détails du Colis (ID: 12345)
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Expéditeur: John Doe</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Destinataire: Jane Smith</h6>
-                            <p>Statut: <strong>Expédié</strong></p>
-                            <p>Adresse de destinatinateur: 123 Rue Exemple, Paris</p>
-                            <p>Date d'envoi: 25/10/2024</p>
-                            <p>Date d'arrivée: N/A</p>
-                        </div>
-                    </div>
+                    @if (filled($number))
 
-                    <h3>Historique de Suivi</h3>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-point active">
-                                <span>Déposé</span>
+                        @forelse ($Colis as $colis)
+                        <div class="card">
+                            <div class="card-header">
+                                Détails du Colis (ID: {{$colis->num_colis}})
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Expéditeur: {{$colis->expeditaires->name}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Destinataire: {{$colis->destinataires->name}}</h6>
+                                <p>Statut: <strong>{{$colis->statut}}</strong></p>
+                                <p>Adresse de destinatinateur: {{$colis->destinataires->Adresse}}</p>
+                                <p>Date d'envoi: {{$colis->date_envoi}}</p>
+                                <p>Date d'arrivée: N/A</p>
                             </div>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-point active">
-                                <span>Expédié</span>
+
+                        <h3>Historique de Suivi</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-point active">
+                                    <span>Déposé</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-point active">
+                                    <span>Expédié</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-point">
+                                    <span>Livré</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-point">
-                                <span>Livré</span>
+
+                        @empty
+                            <div class="text-center">Aucune colis trouvé</div>
+                        @endforelse
+
+                        
+                    @else
+                        @forelse ($Colis as $colis)
+                        <div class="card">
+                            <div class="card-header">
+                                Détails du Colis (ID: {{$colis->num_colis}})
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Expéditeur: {{$colis->expeditaires->name}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Destinataire: {{$colis->destinataires->name}}</h6>
+                                
                             </div>
                         </div>
-                    </div>
+
+                        
+                        @empty
+                            <div class="text-center">Aucune colis trouvé</div>
+                        @endforelse
+                    @endif
+
+
+                    
+                    
                 </div>
 
                    

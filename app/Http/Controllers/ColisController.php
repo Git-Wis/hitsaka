@@ -47,9 +47,20 @@ class ColisController extends Controller
         return view('page.addcolis', compact('colis'));
     }
 
-    public function suivi()
+    public function suivi(Request $request)
     {
-        return view('colis');
+        //dd($request);
+        $number = $request->only(['numcolis']);
+
+        $Colis = Colis::query()->get();
+
+
+        if(filled($number)){
+            $Colis = $Colis->where('num_colis',$number['numcolis']);
+            //dump($Colis);
+        }
+
+        return view('colis', compact('Colis','number'));
     }
 
     /**
@@ -145,7 +156,14 @@ class ColisController extends Controller
      */
     public function show($id)
     {
-        //
+
+    }
+
+
+    public function where(Request $request)
+    {
+        
+
     }
 
     /**

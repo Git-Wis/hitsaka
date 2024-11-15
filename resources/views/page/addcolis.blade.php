@@ -5,11 +5,7 @@
 <div class="container">
     <div class="row flex justify-center">
         <!-- Colonne droite: Bouton pour ouvrir le formulaire d'envoi de colis dans une modale -->
-        <div class="col right-0">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#envoiColisModal">
-                Envoyer un colis
-            </button>
-        </div>
+       
     </div>
     <div class="row">
         <!-- Colonne gauche: Liste des colis avec filtrage -->
@@ -19,11 +15,11 @@
             <!-- Filtres de recherche -->
             <form method="GET" action="{{route('colis.index')}}">
                 <div class="row mb-3">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <label for="filter_date" class="form-label">Date d'envoi</label>
                         <input type="date" class="form-control" id="filter_date" name="filter_date" />
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <label for="filter_destination" class="form-label">Destination</label>
                         <select name="filter_destination" id="filter_destination" class="form-select">
                             <option value="">Tous</option>
@@ -32,8 +28,22 @@
                         </select>
                     </div>
 
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-secondary mb-3">Filtrer</button>
+                    <div class="col-md-4 mt-4">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-secondary ">Filtrer</button>
+                            </div>
+                            <div class="col-md-5">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#envoiColisModal">
+                                        Envoyer un colis
+                                    </button>
+                            </div>
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#envoiColisModal">
+                                    Expedier | livrer 
+                                </button>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </form>

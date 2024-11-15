@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('resa', ResaController::class);
 Route::resource('colis', ColisController::class);
-Route::get('colis/suivi', [ColisController::class, 'suivi'])->name('colis.suivi');
+Route::get('/suivi', [ColisController::class, 'suivi'])->name('colis.suivi');
 
 
 

@@ -35,8 +35,25 @@
                     </select>
                 </div>
                 <div class="col-md-3 mt-4">
-                    <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
+
+                    <div class="row">
+                        <div class="col-4"><button type="submit" class="btn btn-primary mt-2">Filtrer</button></div>
+                        
+                        <div class="col-4">
+                            <a href="{{ route('resa.export.excel') }}" class="btn btn-success me-2">Exporter en Excel</a>
+                        </div>
+                        <div class="col-4">
+                            <a href="{{ route('resa.export.pdf') }}" class="btn btn-danger">Exporter en PDF</a>
+                         </div>
+                    </div>
+                    
+                    <!-- Boutons d'exportation -->
+                    <div class="mt-4">
+                    </div>
                 </div>
+
+                 
+
             </div>
         </form>
 
@@ -110,11 +127,7 @@
             </ul>
         </nav>
 
-         <!-- Boutons d'exportation -->
-         <div class="mt-4">
-            <a href="{{ route('resa.export.excel') }}" class="btn btn-success me-2">Exporter en Excel</a>
-            <a href="{{ route('resa.export.pdf') }}" class="btn btn-danger">Exporter en PDF</a>
-        </div>
+        
 
         
     </div>

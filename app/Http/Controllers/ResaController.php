@@ -8,6 +8,7 @@ use App\Models\voyage;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class ResaController extends Controller
@@ -46,7 +47,7 @@ class ResaController extends Controller
             //dd($reservations);
         }
 
-        $reservations = $reservations->paginate(10); // Pagination
+        $reservations = $reservations->paginate(50); // Pagination
 
 
         return view('page.reservation', compact('reservations', 'filters'));
@@ -73,7 +74,7 @@ class ResaController extends Controller
     public function exportPDF()
     {
         $reservations = Reservation::all();
-        $pdf = PDF::loadView('reservations.pdf', compact('reservations'));
+        $pdf = PDF::loadView('page.exportation.pdf.resapdf', compact('reservations'));
         return $pdf->download('reservations.pdf');
     }
 
