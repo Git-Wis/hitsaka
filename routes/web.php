@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BilanController;
+use App\Http\Controllers\CapitalController;
 use App\Http\Controllers\EquipageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResaController;
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     //retourné vers espace utulisateur 
 
+    Route::get('/capital', [CapitalController::class, 'index'])->name('capital.index');
     Route::get('/bilan', [BilanController::class, 'show_bilan'])->name('bilan.show');
     Route::post('/reservation/{id}/confirm', [ResaController::class, 'confirm'])->name('resa.confirm');
     Route::resource('equipe', EquipageController::class);

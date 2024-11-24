@@ -153,35 +153,39 @@
                     @if (filled($number))
 
                         @forelse ($Colis as $colis)
-                        <div class="card">
-                            <div class="card-header">
-                                Détails du Colis (ID: {{$colis->num_colis}})
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Expéditeur: {{$colis->expeditaires->name}}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Destinataire: {{$colis->destinataires->name}}</h6>
-                                <p>Statut: <strong>{{$colis->statut}}</strong></p>
-                                <p>Adresse de destinatinateur: {{$colis->destinataires->Adresse}}</p>
-                                <p>Date d'envoi: {{$colis->date_envoi}}</p>
-                                <p>Date d'arrivée: N/A</p>
-                            </div>
-                        </div>
-
-                        <h3>Historique de Suivi</h3>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-point active">
-                                    <span>Déposé</span>
+                        <div class="row">
+                            <div class="card col-md-8">
+                                <div class="card-header">
+                                    Détails du Colis (ID: {{$colis->num_colis}})
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Expéditeur: {{$colis->expeditaires->name}}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Destinataire: {{$colis->destinataires->name}}</h6>
+                                    <p>Statut: <strong>{{$colis->statut}}</strong></p>
+                                    <p>Adresse de destinatinateur: {{$colis->destinataires->Adresse}}</p>
+                                    <p>Date d'envoi: {{$colis->date_envoi}}</p>
+                                    <p>Date d'arrivée: N/A</p>
                                 </div>
                             </div>
-                            <div class="timeline-item">
-                                <div class="timeline-point active">
-                                    <span>Expédié</span>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-point">
-                                    <span>Livré</span>
+    
+                            <div class="col-md-4">
+                                <h3>Historique de Suivi</h3>
+                                <div class="timeline ">
+                                    <div class="timeline-item">
+                                        <div class="timeline-point active">
+                                            <span>Déposé</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-point active">
+                                            <span>Expédié</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-point">
+                                            <span>Livré</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Passage;
 use App\Models\voyage;
 use App\Models\Reservation;
+use App\Notifications\ResaDoneNotification;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\ReservationsExport;
+use App\Models\capital;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class ResaController extends Controller
@@ -56,11 +60,33 @@ class ResaController extends Controller
     // Méthode pour confirmer une réservation
     public function confirm($id)
     {
-        $reservation = Reservation::find($id);
-        if ($reservation) {
-            $reservation->payer = true; // Marquer comme payé
-            $reservation->save();
+        Db::beginTransaction();
+
+        try{
+
+            $reservation = Reservation::find($id);
+            if ($reservation) {
+                $reservation->payer = true; // Marquer comme payé
+                $reservation->save();
+            }
+
+           // dd($reservation->passage->prix);
+
+            $capital = capital::create([
+                'idResa' => $reservation->id,
+                'montant' => 2000,
+                'date_transaction' => $reservation->date,
+                'type' => 'Revenu',
+                'description' => 'Réservation de voyage',
+            ]);
         }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['error'=>'Transaction échouée :' . $e->getMessage()],500);
+        }
+       
+
+        DB::commit();
         return redirect()->back()->with('success', 'Réservation confirmée.');
     }
 
@@ -204,6 +230,9 @@ class ResaController extends Controller
                     'direction'=> $voyage->Nom,
                     'date'=> $request->date,
                 ]);
+
+                // Envoyer la notification
+                $passage->notify(new ResaDoneNotification($passage));
 
                 DB::commit();
 
