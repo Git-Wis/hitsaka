@@ -16,6 +16,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="{{asset('bootstrap/js/bootstrap.min.js')}}" defer></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="font-sans">
         <div class="min-vh-100 bg-light bg-dark text-white">

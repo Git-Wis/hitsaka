@@ -1,6 +1,6 @@
-@extends('dashboard')
+@extends('layouts.impression')
 
-@Section('dasboard_containte')
+@Section('impression_containte')
  
  
  <!-- Tableau des réservations -->

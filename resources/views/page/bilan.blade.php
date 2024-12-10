@@ -39,24 +39,18 @@
         <div class="row mb-5">
             <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100">
-                    <div class="card-header">
-                        Réservations par Mois
-                    </div>
+                    <div class="card-header">Réservations par Mois</div>
                     <div class="card-body">
-                        <!-- Graphique en Barres -->
-                        <canvas id="reservationChart" class="w-100" height="200"></canvas>
+                        <canvas id="reservationChart" class="w-100 img-fluid" height="200"></canvas>
                     </div>
                 </div>
             </div>
-
+        
             <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100">
-                    <div class="card-header">
-                        Statut des Paiements
-                    </div>
+                    <div class="card-header">Statut des Paiements</div>
                     <div class="card-body">
-                        <!-- Graphique en Secteurs -->
-                        <canvas id="paymentChart" class="w-100" height="200"></canvas>
+                        <canvas id="paymentChart" class="w-100 img-fluid" height="200"></canvas>
                     </div>
                 </div>
             </div>
@@ -113,15 +107,18 @@
     <!-- Chart.js pour les Graphiques -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Données pour le graphique des réservations
-        var ctx = document.getElementById('reservationChart').getContext('2d');
-        var reservationChart = new Chart(ctx, {
+        // Données dynamiques injectées depuis Laravel
+        var reservationsData = @json($reservationsParMoisFormatted);
+        var paiementsData = @json($statutPaiements);
+    
+        // Réservations par mois
+        new Chart(document.getElementById('reservationChart').getContext('2d'), {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
                 datasets: [{
                     label: 'Réservations',
-                    data: [12, 19, 3, 5, 2, 3, 9, 13, 22, 30, 20, 12],
+                    data: reservationsData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
@@ -135,24 +132,17 @@
                 }
             }
         });
-
-        // Données pour le graphique des paiements
-        var ctx2 = document.getElementById('paymentChart').getContext('2d');
-        var paymentChart = new Chart(ctx2, {
+    
+        // Statut des paiements
+        new Chart(document.getElementById('paymentChart').getContext('2d'), {
             type: 'pie',
             data: {
                 labels: ['Payé', 'Non Payé'],
                 datasets: [{
                     label: 'Paiements',
-                    data: [75, 25],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 99, 132, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
+                    data: paiementsData,
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
                     borderWidth: 1
                 }]
             }

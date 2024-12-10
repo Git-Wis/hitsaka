@@ -232,6 +232,8 @@
         <main>
             @yield('dasboard_containte')
         </main>
+
+        
             
   
 </x-app-layout>

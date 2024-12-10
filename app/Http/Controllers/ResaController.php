@@ -13,6 +13,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\ReservationsExport;
 use App\Models\capital;
 use Maatwebsite\Excel\Facades\Excel;
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use Dompdf\Dompdf;
+
 
 
 class ResaController extends Controller
@@ -74,7 +77,7 @@ class ResaController extends Controller
 
             $capital = capital::create([
                 'idResa' => $reservation->id,
-                'montant' => 2000,
+                'montant' => 65000,
                 'date_transaction' => $reservation->date,
                 'type' => 'Revenu',
                 'description' => 'Réservation de voyage',
@@ -88,6 +91,35 @@ class ResaController extends Controller
 
         DB::commit();
         return redirect()->back()->with('success', 'Réservation confirmée.');
+    }
+
+    public function imprimerReçu($id)
+    {
+        $reservation = Reservation::find($id);
+
+        // Vérification : Si la réservation est introuvable
+        if (!$reservation) {
+            return redirect()->back()->with('error', 'Réservation introuvable.');
+        }
+
+        // Générer un code-barres basé sur l'ID de la réservation
+        $barcodeGenerator = new BarcodeGeneratorPNG();
+        $barcode = $barcodeGenerator->getBarcode($reservation->id, $barcodeGenerator::TYPE_CODE_128);
+        $barcodeBase64 = 'data:image/png;base64,' . base64_encode($barcode);
+
+        // Créer le contenu HTML du reçu
+        $html = view('page.exportation.pdf.resareçu', compact('reservation', 'barcodeBase64'))->render();
+
+        // Générer le PDF
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper([0, 0, 226.77, 566.93], 'portrait');
+        $dompdf->render();
+
+        // Retourner le PDF pour téléchargement ou affichage
+        return $dompdf->stream('reçu_réservation_' . $reservation->id . '.pdf');
+
+       // return redirect()->back()->with('success', "Le reçu de la Réservation est en cours d'impression.");
     }
 
     // Export en Excel
@@ -232,7 +264,7 @@ class ResaController extends Controller
                 ]);
 
                 // Envoyer la notification
-                $passage->notify(new ResaDoneNotification($passage));
+                //$passage->notify(new ResaDoneNotification($passage));
 
                 DB::commit();
 

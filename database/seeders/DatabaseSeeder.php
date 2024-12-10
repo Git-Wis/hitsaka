@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        //$this->call(AdminSeeder::class);
+        $this->call(AdminSeeder::class);
+
+        $this->call(TypeDepenseSeeder::class);
 
         // Créer 5 voyages et 10 passagers
         $voyages = Voyage::factory(5)->create();

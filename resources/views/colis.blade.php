@@ -100,6 +100,8 @@
     </head>
     <body class="">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center py-4 sm:pt-0">
+
+
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -114,8 +116,8 @@
                 </div>
 
                 <div class="hidden fixed px-6 top-6 py-4 sm:block">
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 px-3 py-2 bg-danger">Réservation</a>
-                    <a href="{{ route('colis.suivi') }}" class="text-sm text-gray-700 px-3 py-2 bg-danger">Suivie de Colis</a>
+                    <a href="{{ route('login') }}" class="bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/80 transition">Réservation</a>
+                    <a href="{{ route('colis.suivi') }}" class="bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/80 transition">Suivie de Colis</a>
                 </div>
 
             @endif
@@ -139,14 +141,15 @@
                     </div>
                 @endif
     
-                <div class="container mt-5">
-                    <h1>Suivi de Colis</h1>
+                <div class="container mx-auto p-6 bg-card rounded-lg shadow-lg">
+                   
+                    <h1 class="text-4xl font-bold text-primary mb-4">Suivre un colis</h1>
+                    <p class="mb-4 text-muted-foreground">Renseignez un numéro de colis</p>
+
                     <form action="{{ route('colis.suivi') }}" method="GET" class="mb-4">
-                        <div class="input-group">
-                            <input type="text" name="numcolis" class="form-control" placeholder="Entrez votre Numéro de colis" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">Suivre</button>
-                            </div>
+                        <div class="flex items-center mb-4">
+                            <input  type="text" name="numcolis" placeholder="Ex : 6Q01929938641" class="border border-zinc-300 rounded-l-md p-3 w-full focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <button type="submit" class="bg-primary text-primary-foreground rounded-r-md p-3 hover:bg-primary/80 transition">Rechercher</button>
                         </div>
                     </form>
                     
@@ -214,13 +217,16 @@
                         @endforelse
                     @endif
 
-
-                    
                     
                 </div>
+                    
+                    
+            </div>
 
                    
-            </div>
+        </div>
+
+       
         
     </body>
 </html>

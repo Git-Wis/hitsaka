@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('capitals', function (Blueprint $table) {
+        Schema::create('depense_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idResa')->constrained('reservations')->onDelete('cascade')->default(0);
-            $table->string('type');
-            $table->decimal('montant');
-            $table->string('description');
-            $table->date('date_transaction');
+            $table->string('name'); // Nom du type de dépense
+            $table->text('description')->nullable(); // Description facultative
             $table->timestamps();
         });
-    }
 
+    }
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('capitals');
+        Schema::dropIfExists('depense_types');
     }
 };

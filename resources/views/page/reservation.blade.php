@@ -91,6 +91,11 @@
                                   @csrf
                                   <button type="submit" class="btn btn-success btn-sm">Confirmer</button>
                               </form>
+                            @else
+                                <form action="{{ route('resa.imprimerReçu', $reservation->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">Imprimer Reçu</button>
+                                </form>
                           @endif
                       </td>
                   </tr>

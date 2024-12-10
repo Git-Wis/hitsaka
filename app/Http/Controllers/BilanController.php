@@ -41,11 +41,11 @@ class BilanController extends Controller
 
     public function show_bilan()
     {
-
+        $year = Carbon::now()->year;
         
-        $totalResa = Reservation::count();
-        $totalConfirm = Reservation::Where('payer',1)->count();
-        $totalNotConfirm = Reservation::Where('payer',0)->count();
+        $totalResa = Reservation::whereYear('date', $year)->count();
+        $totalConfirm = Reservation::Where('payer',1)->whereYear('date', $year)->count();
+        $totalNotConfirm = Reservation::Where('payer',0)->whereYear('date', $year)->count();
 
         //recupéré les reservation des trois dernier mois 
 
@@ -55,9 +55,35 @@ class BilanController extends Controller
         $mois2 = $this->CountResa(2);
         // 3-eme mois 
         $mois3 = $this->CountResa(3);
+
+        
         
 
-        //dd($totalResa);
+        //recuperer les données a mette dans les canvas 
+        
+        // Réservations par mois
+        $reservationsParMois = Reservation::selectRaw('MONTH(date) as mois, COUNT(*) as total')
+        ->whereYear('date', $year)
+        ->groupBy('mois')
+        ->orderBy('mois')
+        ->pluck('total', 'mois');
+
+        // Formatage pour inclure tous les mois de l'année
+        $reservationsParMoisFormatted = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $reservationsParMoisFormatted[] = $reservationsParMois[$i] ?? 0;
+        }
+
+        //dump($reservationsParMoisFormatted);
+
+        // Statut des paiements
+        $paiementsData = [
+            'payé' => Reservation::where('payer',1)->whereYear('date', $year)->count(),
+            'non_payé' => Reservation::where('payer',0)->whereYear('date', $year)->count()
+        ];
+
+        $statutPaiements = array_values($paiementsData);
+
 
 
         return view('page.bilan', 
@@ -67,7 +93,9 @@ class BilanController extends Controller
             'totalNotConfirm',
             'mois1',
             'mois2',
-            'mois3'
+            'mois3',
+            'reservationsParMoisFormatted',
+            'statutPaiements'
         ));
     }
 

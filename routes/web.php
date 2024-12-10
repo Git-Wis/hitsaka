@@ -38,11 +38,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/capital', [CapitalController::class, 'index'])->name('capital.index');
     Route::get('/bilan', [BilanController::class, 'show_bilan'])->name('bilan.show');
     Route::post('/reservation/{id}/confirm', [ResaController::class, 'confirm'])->name('resa.confirm');
+    Route::post('/reservation/{id}/reçu', [ResaController::class, 'imprimerReçu'])->name('resa.imprimerReçu');
     Route::resource('equipe', EquipageController::class);
     Route::get('/reservation/{id}', [ResaController::class, 'semaine_resa'])->name('resa.semaine_resa');
 
     Route::get('reservations/export/excel', [ResaController::class, 'exportExcel'])->name('resa.export.excel');
     Route::get('reservations/export/pdf', [ResaController::class, 'exportPDF'])->name('resa.export.pdf');
+
+    Route::post('capital/store', [CapitalController::class, 'store'])->name('capital.store');
 
 
 });
